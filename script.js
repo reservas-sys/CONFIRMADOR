@@ -2,20 +2,36 @@
    CONFIGURACIÓN FINAL - VIVANTURA (CONFIRMACIÓN)
    ========================================== */
 
+const ACCESS_PASSWORD = 'HOLA'; 
+
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --------------------------------------------------------
-    // 1. CONFIGURACIÓN DE CORREO (EMAILJS) - VIVANTURA
-    // --------------------------------------------------------
+    // 1. LOGIN
+    const loginOverlay = document.getElementById('login-overlay');
+    const loginForm = document.getElementById('login-form');
+    const passwordInput = document.getElementById('password-input');
+    const loginError = document.getElementById('login-error');
+    const mainWrapper = document.querySelector('.wrapper');
+
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (passwordInput.value === ACCESS_PASSWORD) {
+            loginOverlay.style.display = 'none';
+            mainWrapper.style.display = 'block';
+        } else {
+            loginError.style.display = 'block';
+            passwordInput.value = '';
+        }
+    });
+
+    // 2. CONFIGURACIÓN EMAILJS (NUEVO - VIVANTURA)
     const EMAILJS_SERVICE_ID = 'service_1q1q1l9';
     const EMAILJS_PUBLIC_KEY = 'Bwz_ooLl9-P5SjDQA';
     const EMAILJS_TEMPLATE_ID = 'template_i7zwj8u'; 
     
     emailjs.init(EMAILJS_PUBLIC_KEY);
 
-    // --------------------------------------------------------
-    // 2. CONFIGURACIÓN DE FIREBASE (TU PROYECTO ANTIGUO)
-    // --------------------------------------------------------
+    // 3. CONFIGURACIÓN FIREBASE (ANTIGUO - QUE FUNCIONA)
     const firebaseConfig = {
       apiKey: "AIzaSyBeoG3uxq3f8wzQgEp0AkhnoWTlTVFLjJs",
       authDomain: "links-61279.firebaseapp.com",
@@ -39,9 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Error: Firebase Storage no está disponible.");
     }
 
-    // --------------------------------------------------------
-    // 3. LÓGICA DEL SISTEMA
-    // --------------------------------------------------------
+    // 4. LÓGICA DEL SISTEMA
     const form = document.getElementById('pre-reserva-form');
     const formTitleSection = document.getElementById('form-title-section');
     const formSection = document.getElementById('form-section');
@@ -71,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pdf.link(x, y, w, h, { url: element.href });
     }
 
-    // Rellenar datos en el voucher
+    // Rellenar datos
     function populateVoucher() {
         const data = {
             destino: document.getElementById('destino').value, nombre: document.getElementById('nombre-completo').value, documento: document.getElementById('documento').value, 
@@ -113,12 +127,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('confirm-noches').textContent = `${nochesInt} ${nochesInt > 1 ? 'noches' : 'noche'}`;
         document.getElementById('confirm-observaciones').textContent = data.observaciones.trim() || 'Ninguna';
         
-        // TEXTO FIJO PARA CONFIRMACIÓN
+        // TEXTO FIJO
         document.getElementById('confirm-valor-restante').textContent = 'PAGADO EN SU TOTALIDAD';
-        
         document.getElementById('confirm-plan-incluye').innerHTML = planDescription;
         
-        // WhatsApp del Footer
+        // WhatsApp Footer
         const wppNumber = '3137449530';
         document.getElementById('footer-wpp-link').href = `https://wa.me/${wppNumber}`;
     }
@@ -126,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Generar PDF y Enviar
     async function processVoucher() {
         if (!storage) {
-            alert("⚠️ Error: Firebase no conectó correctamente. Revisa la consola.");
+            alert("⚠️ Error: Firebase no conectó correctamente.");
         }
         
         toggleLoader(true, "Generando PDF...");
@@ -153,10 +166,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const nombreCliente = document.getElementById('nombre-completo').value;
             const localFileName = `Confirmacion_${nombreCliente.replace(/ /g, '_')}.pdf`;
             
-            // 1. Guardar PDF Localmente
             pdf.save(localFileName);
             
-            // 2. Subir a Firebase y Enviar Correo
             if (storage) {
                 const pdfBlob = pdf.output('blob');
                 const firebaseFileName = `confirmaciones/Confirmacion_${nombreCliente.replace(/ /g, '_')}_${Date.now()}.pdf`;
@@ -177,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
                 
                 await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
-                alert("¡ÉXITO TOTAL!\n\n1. PDF descargado.\n2. Archivo guardado en la nube.\n3. Correo enviado.");
+                alert("¡ÉXITO TOTAL!\n\n1. PDF descargado.\n2. Archivo guardado.\n3. Correo enviado.");
             } else {
                 alert("¡PDF DESCARGADO!\n\nNota: No se envió el correo porque Firebase no respondió.");
             }
@@ -216,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('fecha-viaje').min = new Date().toISOString().split("T")[0];
 });
 
-// Función de Mapas (Global)
+// Mapas (Global)
 function initAutocomplete() {
     const destinoInput = document.getElementById('destino');
     const hotelInput = document.getElementById('hotel');
