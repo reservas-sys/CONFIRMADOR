@@ -15,10 +15,24 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
     
-    <!-- HOJA DE ESTILOS Y SCRIPT PRINCIPAL -->
+    <!-- HOJA DE ESTILOS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- PANTALLA DE LOGIN (NUEVO) -->
+    <div id="login-overlay">
+        <div id="login-box">
+            <img src="https://i.imgur.com/GiTvvrW.png" alt="Vivantura Login" class="login-logo">
+            <h2>Acceso Restringido</h2>
+            <p>Introduce la contraseña para generar confirmaciones.</p>
+            <form id="login-form">
+                <input type="password" id="password-input" placeholder="Contraseña" required>
+                <button type="submit">Ingresar</button>
+                <p id="login-error" style="color: #ff6b6b; display: none; margin-top: 15px;">Contraseña incorrecta.</p>
+            </form>
+        </div>
+    </div>
 
     <div id="loader-overlay">
         <div class="spinner"></div>
@@ -27,9 +41,9 @@
 
     <div class="wrapper">
         <section class="section" id="form-title-section">
-            <header class="header"><img src="https://i.imgur.com/GiTvvrW.png" alt="Logo Formulario"></header>
+            <header class="header"><img src="https://i.imgur.com/GiTvvrW.png" alt="Vivantura Logo"></header>
             <h1 style="margin-top: 30px;">Generador de Confirmación</h1>
-            <p class="intro-text">Completa la siguiente información para generar el comprobante de reserva confirmada.</p>
+            <p class="intro-text">Completa la información para generar el comprobante de reserva confirmada (Pagada).</p>
         </section>
 
         <section class="section" id="form-section" style="padding-top: 0;">
@@ -50,17 +64,18 @@
                     <div class="form-group full-width"><label for="acompanantes">Nombres de los Acompañantes</label><textarea id="acompanantes" placeholder="Escribe los nombres completos, uno por línea"></textarea></div>
                     <div class="form-group full-width"><label for="observaciones">Notas u Observaciones Adicionales</label><textarea id="observaciones" placeholder="Añade aquí cualquier detalle importante..."></textarea></div>
                 </div>
-                <button type="submit" class="submit-button">Generar Comprobante</button>
+                <button type="submit" class="submit-button">Generar Confirmación</button>
             </form>
         </section>
 
         <div id="confirmation-section">
             <div id="voucher-to-print">
+                <!-- CABECERA DE PLAYA (CSS) -->
                 <header class="confirmation-header"></header>
                 
                 <div class="voucher-content">
                     
-                    <!-- BANNER AMARILLO DE CONFIRMACIÓN -->
+                    <!-- BANNER AMARILLO -->
                     <div class="confirmation-pill">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
                         ¡Reserva Confirmada!
@@ -135,6 +150,7 @@
         </div>
     </div>
     
+    <!-- SCRIPT DE MAPAS CON TU CLAVE PERSONAL QUE FUNCIONA -->
     <script src="script.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASTSvQgNsR-4wQeIuHAd6S9_fTmaKG56g&libraries=places&callback=initAutocomplete"></script>
 
