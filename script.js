@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. CONFIGURACIÓN EMAILJS (NUEVO - VIVANTURA)
     const EMAILJS_SERVICE_ID = 'service_1q1q1l9';
     const EMAILJS_PUBLIC_KEY = 'Bwz_ooLl9-P5SjDQA';
-    const EMAILJS_TEMPLATE_ID = 'template_i7zwj8u'; 
+    const EMAILJS_TEMPLATE_ID = 'template_whuu7at'; 
     
     emailjs.init(EMAILJS_PUBLIC_KEY);
 
