@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('confirm-plan-incluye').innerHTML = planDescription;
         
         // WhatsApp Footer
-        const wppNumber = '3137449530';
+        const wppNumber = '3014305051';
         document.getElementById('footer-wpp-link').href = `https://wa.me/${wppNumber}`;
     }
 
